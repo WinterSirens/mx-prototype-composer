@@ -20,11 +20,12 @@ export default function Screen4({ onNext, onTabChange }: Props) {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-composer-light">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-composer-light">
       <Sidebar activeItem="Workspace" onTabChange={onTabChange} />
       
-      <main className="flex-1 flex flex-col relative">
-        <div className="flex-1 overflow-y-auto p-8 pb-32">
+      <div className="flex-1 min-h-0 flex flex-col xl:flex-row">
+      <main className="flex-1 min-h-[80vh] xl:min-h-0 flex flex-col relative">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 pb-32">
           <div className="max-w-3xl mx-auto space-y-8">
             {/* Initial System Message */}
             <div className="flex gap-4">
@@ -68,7 +69,7 @@ export default function Screen4({ onNext, onTabChange }: Props) {
                 
                 {/* Option Chips */}
                 {!selectedOption && (
-                  <div className="flex gap-3 mt-4 ml-2">
+                  <div className="flex flex-wrap gap-3 mt-4 ml-2">
                     <button 
                       onClick={() => handleOptionClick('Pre-set templates')}
                       className="bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm transition-colors"
@@ -122,7 +123,7 @@ export default function Screen4({ onNext, onTabChange }: Props) {
         </div>
 
         {/* Input Area */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-composer-light via-composer-light to-transparent">
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 bg-gradient-to-t from-composer-light via-composer-light to-transparent">
           <div className="max-w-3xl mx-auto relative">
             <textarea 
               readOnly
@@ -141,6 +142,7 @@ export default function Screen4({ onNext, onTabChange }: Props) {
       </main>
 
       <RightPanel journeyState="pending" />
+      </div>
     </div>
   );
 }

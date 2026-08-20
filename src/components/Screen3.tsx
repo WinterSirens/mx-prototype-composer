@@ -140,19 +140,20 @@ Please configure the UI appropriately based on these goals.`;
   const availableOutcomes = OUTCOMES.filter(o => selectedUseCase && USE_CASE_TO_OUTCOMES[selectedUseCase]?.includes(o));
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-composer-light">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-composer-light">
       <Sidebar activeItem="Workspace" onTabChange={onTabChange} />
       
-      <main className="flex-1 flex flex-col relative overflow-y-auto">
-        <div className="max-w-4xl mx-auto w-full pt-16 px-8 pb-32">
+      <div className="flex-1 min-h-0 flex flex-col xl:flex-row">
+      <main className="flex-1 min-h-0 flex flex-col relative overflow-y-auto">
+        <div className="max-w-4xl mx-auto w-full pt-8 sm:pt-16 px-4 sm:px-8 pb-16 sm:pb-32">
           
-          <div className="mb-12">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3 tracking-tight">Define Your Strategy</h1>
-            <p className="text-gray-600 text-lg">Select your strategic needs, use cases, and desired outcomes to generate a customized prototype.</p>
+          <div className="mb-8 sm:mb-12">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 tracking-tight">Define Your Strategy</h1>
+            <p className="text-gray-600 text-base sm:text-lg">Select your strategic needs, use cases, and desired outcomes to generate a customized prototype.</p>
           </div>
 
           {/* Progress Bar */}
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-8 sm:mb-12">
             {[1, 2, 3].map(s => (
               <div key={s} className={`h-2 flex-1 rounded-full transition-colors duration-300 ${s <= step ? 'bg-[#2d5f3f]' : 'bg-gray-200'}`} />
             ))}
@@ -315,6 +316,7 @@ Please configure the UI appropriately based on these goals.`;
       </main>
 
       <RightPanel journeyState="pending" />
+      </div>
     </div>
   );
 }

@@ -17,7 +17,10 @@ interface Props {
 
 export default function Screen6({ currentScreen, onNavigate, onTabChange }: Props) {
   const isDetail = currentScreen === '6a';
-  const [zoom, setZoom] = useState(1);
+  // Fit the fixed-width device frames into narrow viewports on first paint.
+  const [zoom, setZoom] = useState(() =>
+    typeof window === 'undefined' ? 1 : Math.min(1, (window.innerWidth - 32) / 390)
+  );
   const [device, setDevice] = useState<'mobile' | 'web'>('mobile');
   const [isChatExpanded, setIsChatExpanded] = useState(false);
   const [chatInput, setChatInput] = useState('');
@@ -210,11 +213,11 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-composer-light">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-composer-light">
       <Sidebar activeItem="Workspace" onTabChange={onTabChange} />
       
-      {/* Collapsed Chat Panel */}
-      <div className={`${isChatExpanded ? 'w-80' : 'w-64'} bg-white border-r border-gray-200 flex flex-col shrink-0 transition-all duration-300`}>
+      {/* Collapsed Chat Panel — stacks below the preview on mobile */}
+      <div className={`order-last lg:order-none w-full ${isChatExpanded ? 'lg:w-80' : 'lg:w-64'} max-h-[50vh] lg:max-h-none bg-white border-t lg:border-t-0 lg:border-r border-gray-200 flex flex-col shrink-0 transition-all duration-300`}>
         <div className="p-4 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MessageSquare size={16} className="text-gray-400" />
@@ -226,7 +229,7 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
             </button>
           )}
         </div>
-        <div className="flex-1 p-4 overflow-y-auto space-y-4">
+        <div className={`${isChatExpanded ? 'flex' : 'hidden'} lg:flex flex-col flex-1 p-4 overflow-y-auto space-y-4`}>
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
               <div className={`rounded-xl p-3 text-sm max-w-[90%] ${
@@ -300,9 +303,10 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
       </div>
 
       {/* Center Panel - Phone Preview */}
-      <main className="flex-1 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+      <div className="flex-1 min-h-0 flex flex-col xl:flex-row">
+      <main className="flex-1 min-h-[70vh] xl:min-h-0 flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
         {/* Top Controls */}
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200 z-20">
+        <div className="absolute top-3 sm:top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-4 bg-white px-3 sm:px-4 py-2 rounded-full shadow-sm border border-gray-200 z-20">
           <div className="flex items-center gap-1 border-r border-gray-200 pr-4">
             <button onClick={() => setDevice('mobile')} className={`p-1.5 rounded-md transition-colors ${device === 'mobile' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600'}`}>
               <Smartphone size={18} />
@@ -322,8 +326,8 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
           </div>
         </div>
 
-        <div className="flex-1 w-full h-full flex items-center justify-center overflow-auto pt-16 pb-20">
-          <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center', transition: 'transform 0.2s ease-out' }}>
+        <div className="flex-1 w-full h-full flex items-start justify-center overflow-auto pt-14 sm:pt-16 pb-24">
+          <div style={{ transform: `scale(${zoom})`, transformOrigin: 'top center', transition: 'transform 0.2s ease-out' }}>
             <FrameComponent>
               <div className={`h-full ${device === 'web' ? 'max-w-3xl mx-auto w-full relative' : ''}`}>
                 <AnimatePresence mode="wait">
@@ -893,7 +897,7 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
   </div>
 
   {/* Bottom Actions */}
-  <div className="absolute bottom-8 flex gap-4 z-20">
+  <div className="absolute bottom-4 sm:bottom-8 flex flex-wrap justify-center gap-3 sm:gap-4 z-20 px-4">
     <button onClick={() => setIsChatExpanded(true)} className="bg-white border border-gray-200 text-gray-700 px-6 py-2.5 rounded-lg text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors">
       Refine in chat
     </button>
@@ -904,6 +908,7 @@ export default function Screen6({ currentScreen, onNavigate, onTabChange }: Prop
 </main>
 
       <RightPanel journeyState="complete" />
+      </div>
     </div>
   );
 }

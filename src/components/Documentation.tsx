@@ -7,10 +7,10 @@ interface Props {
 
 export default function Documentation({ onTabChange }: Props) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-composer-light">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-composer-light">
       <Sidebar activeItem="Documentation" onTabChange={onTabChange} />
       
-      <main className="flex-1 overflow-y-auto p-8">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-8">
         <div className="max-w-4xl mx-auto space-y-8 pb-20">
           
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">

@@ -20,17 +20,17 @@ export default function Screen2({ onNext, onTabChange }: Props) {
     }
   };
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-composer-light">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-composer-light">
       <Sidebar activeItem="" onTabChange={onTabChange} />
       
       <motion.main 
-        className="flex-1 flex items-center justify-center p-8 overflow-y-auto"
+        className="flex-1 min-h-0 flex items-start lg:items-center justify-center p-4 sm:p-8 overflow-y-auto"
         initial={{ x: 50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: -50, opacity: 0 }}
       >
         <div 
-          className="bg-white rounded-2xl p-10 w-full max-w-2xl"
+          className="bg-white rounded-2xl p-6 sm:p-10 w-full max-w-2xl"
           style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
         >
           <div className="mb-8">
@@ -141,13 +141,13 @@ export default function Screen2({ onNext, onTabChange }: Props) {
             </div>
 
             {/* Actions */}
-            <div className="pt-8 flex items-center justify-between border-t border-gray-100 mt-8">
+            <div className="pt-8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 sm:gap-0 sm:justify-between border-t border-gray-100 mt-8">
               <button className="text-sm font-medium text-gray-500 hover:text-gray-800">
                 Skip and use a generic brand
               </button>
               <button 
                 onClick={onNext}
-                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors w-full sm:w-auto"
               >
                 Continue
               </button>

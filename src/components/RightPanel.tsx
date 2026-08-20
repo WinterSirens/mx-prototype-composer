@@ -93,7 +93,7 @@ export default function RightPanel({ journeyState, generatingStep = 0 }: Props) 
   const journeyItems = getJourneyItems();
 
   return (
-    <div className="w-80 bg-white border-l border-gray-200 h-screen flex flex-col shrink-0 overflow-y-auto">
+    <div className="w-full xl:w-80 xl:min-h-0 bg-white border-t xl:border-t-0 xl:border-l border-gray-200 flex flex-col shrink-0 overflow-y-auto">
       {/* Brand Kit Section */}
       <div className="p-6 border-b border-gray-100">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Brand Kit</h3>

@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <UIProvider>
-      <div className="min-h-screen w-full flex flex-col bg-composer-light font-sans text-gray-900">
+      <div className="min-h-screen w-full flex flex-col bg-composer-light font-sans text-gray-900 overflow-x-hidden">
         {currentTab === 'documentation' ? (
           <Documentation onTabChange={handleTabChange} />
         ) : (
